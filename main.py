@@ -1,16 +1,12 @@
-# This is a sample Python script.
+from fabric import Connection, task
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+@task
+def list_files(c):
+    result = c.run('ls', hide=True)
+    print("Ran on {}: {}".format(c.host, result.stdout.strip()))
 
+# Connect to the remote server using Paramiko directly
+conn = Connection(host='your_server_ip', user='your_username', connect_kwargs={"password": "your_password"})
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# Run the 'list_files' task on the remote server
+list_files(conn)
